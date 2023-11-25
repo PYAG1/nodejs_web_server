@@ -1,0 +1,2 @@
+20231120	17:48:22	37ca38ce-6842-4b31-94cd-7a08b9ac6fbb	Error: not ajuhllowed by cors 
+20231125	16:30:38	1da70a52-bbc8-4fef-8909-ed0549857ee4	Error: ENOENT: no such file or directory, stat 'C:\Users\PYAG\Desktop\nodejs_web_server\views\test.html'
