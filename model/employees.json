@@ -1,11 +1,12 @@
 [
     {
-        "id":1,
-        "firstname":"Papa",
-        "lastname":"Yaw"
+      "id": 1,
+      "firstname": "PapaGyekey",
+      "lastname": "Yaw"
     },
-    {"id":2,
-        "firstname":"Dante",
-        "lastname":"Inferno"
+    {
+      "id": 2,
+      "firstname": "Dante",
+      "lastname": "Inferno"
     }
-]
+  ]
