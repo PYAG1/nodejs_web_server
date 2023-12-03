@@ -27,6 +27,7 @@ app.use("/subdir", express.static(path.join(__dirname, "/public")));
 //provifng a route you use app.use
 
 app.use("/", require("./routes/root"));
+app.use("/register", require("./routes/api/register"));
 app.use("/employees", require("./routes/api/employees"));
 
 //setting a custom 404
