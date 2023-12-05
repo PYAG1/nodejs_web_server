@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const {getAllEmployee,createNewEmployee,updateEmployee,deleteEmployee,getEmployeeByID}= require("../../controllers/employeeController")
+const {getAllEmployee,createNewEmployee,updateEmployee,deleteEmployee,getEmployeeByID}= require("../../controllers/employeeController");
+const verifyJWT = require("../../middleware/VerifyJWT");
+
 
 
 router.route("/")

@@ -6,6 +6,8 @@ const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const cors = require("cors");
 const corsOption = require("./config/corsOptions");
+const cookieParser =require("cookie-parser")
+const verifyJWT = require("./middleware/VerifyJWT");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -19,15 +21,25 @@ app.use(logger);
 
 app.use(cors(corsOption));
 
-//for serving static pages
+
+//for serving static pages 
 app.use(express.static(path.join(__dirname, "/public")));
+
+//middleware for cookies
+ app.use(cookieParser())
 
 app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
+app.use(cookieParser());//middleware for cookie parser
 //provifng a route you use app.use
 
 app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/api/register"));
+
+app.use("/auth",require("./routes/api/auth")) 
+app.use("/refresh",require("./routes/api/refreshToken"))
+
+app.use(verifyJWT)//to add auth to a route 
 app.use("/employees", require("./routes/api/employees"));
 
 //setting a custom 404
@@ -38,6 +50,8 @@ app.get("/*", (req, res) => {
 app.all("*", (req, res) => {
   res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
+
+
 
 //custom error
 app.use(errorHandler);
