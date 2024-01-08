@@ -8,7 +8,10 @@ const cors = require("cors");
 const corsOption = require("./config/corsOptions");
 const cookieParser =require("cookie-parser")
 const verifyJWT = require("./middleware/VerifyJWT");
+const mongoose = require("mongoose");
+const connnecrDb = require("./config/dbCon");
 
+connnecrDb()
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -56,10 +59,13 @@ app.all("*", (req, res) => {
 
 //custom error
 app.use(errorHandler);
-
-app.listen(Port, () => {
-  console.log(`Example app listening on port ${Port}`);
-});
+mongoose.connection.once("open",()=>{
+  console.log("Connected");
+  app.listen(Port, () => {
+    console.log(`Example app listening on port ${Port}`);
+  });
+  
+})//listen for the open event to see if it connctrf
 
 //app.use() does not accepts regex
 //app.all()is used from routing
