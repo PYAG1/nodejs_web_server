@@ -7,7 +7,8 @@ const userDB = {
 const fspromies= require("fs").promises;
 const path = require("path");
 //you use Bcriypt to hash passwords
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const ROLES_LIST = require("../config/roles_list");
 
 
 const handleNewUser=async (req,res)=>{
@@ -26,7 +27,7 @@ if(duplicates){
 try {
     const hashedpws= await bcrypt.hash(password,10)
     //store new user
-    const newUser= {"username":user,"hashpwd":hashedpws}
+    const newUser= {"username":user,"role":{"User":2001},"hashpwd":hashedpws}
     userDB.setUsers([...userDB.users,newUser])
 
     await fspromies.writeFile(

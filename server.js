@@ -18,8 +18,8 @@ app.use(express.json());
 //it takes an origin and a callbakc if the whitelist indexof the origin is in the array you use call back
 //if true the callback(null, true)
 app.use(logger);
-
-app.use(cors(corsOption));
+app.use(corsOption.credentials)
+app.use(cors(corsOption.corsOption));
 
 
 //for serving static pages 
@@ -38,6 +38,7 @@ app.use("/register", require("./routes/api/register"));
 
 app.use("/auth",require("./routes/api/auth")) 
 app.use("/refresh",require("./routes/api/refreshToken"))
+app.use("/logout",require("./routes/api/logout"))
 
 app.use(verifyJWT)//to add auth to a route 
 app.use("/employees", require("./routes/api/employees"));
