@@ -1,11 +1,4 @@
-const userDB = {
-    users:require("../model/users.json"),
-    setUsers:function (data){
-        this.users= data
-    }
-}
-const fspromies= require("fs").promises;
-const path = require("path");
+const User = require("../model/User")
 //you use Bcriypt to hash passwords
 const bcrypt = require("bcrypt");
 const ROLES_LIST = require("../config/roles_list");
@@ -20,20 +13,16 @@ if(!user || !password){
 
 
 //409 means conflict
-const duplicates = userDB.users.find(person=> person.username === user);
+const duplicates = await User.findOne({username:user}).exec()
 if(duplicates){
     return res.sendStatus(409);
 }
 try {
     const hashedpws= await bcrypt.hash(password,10)
-    //store new user
-    const newUser= {"username":user,"role":{"User":2001},"hashpwd":hashedpws}
-    userDB.setUsers([...userDB.users,newUser])
+    //create and store new user
+    const result=await User.create( {"username":user,"password":hashedpws})
 
-    await fspromies.writeFile(
-        path.join(__dirname,"..","model","users.json"),JSON.stringify(userDB.users)
-    )
-    console.log(userDB.users)
+    console.log(result )
     res.status(201).json({"message":"user was created"})
 } catch (error) {
     res.status(500).json({"error":`${error}`})

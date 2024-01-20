@@ -8,15 +8,13 @@ const userDb = {
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
-
+const User = require("../model/User")
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   console.log(cookies?.jwt);
   const refreshToken = cookies.jwt;
-  const foundUser = userDb.users.find(
-    (item) => item.RefreshToken === refreshToken
-  );
+  const foundUser = User.findOne({refreshToken}).exec()
 
   if (!foundUser) {
     res.sendStatus(403); //forbidden
